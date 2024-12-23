@@ -23,7 +23,6 @@ class RegisterButton extends StatelessWidget {
       ),
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          // Process data
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Registration successful!')),
           );

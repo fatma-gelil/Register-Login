@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task3/src/feature/home/screens/register.dart';
 import 'package:task3/src/feature/home/widget/login_button.dart';
+import 'package:task3/src/feature/home/widget/login_fields_list.dart';
 import 'package:task3/src/feature/widgets/custom_text_field.dart';
 
 class LoginData {
@@ -12,8 +13,6 @@ class LoginData {
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
 
   LoginScreen({super.key});
 
@@ -28,73 +27,47 @@ class LoginScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: ListView(
-            children: [
-              const SizedBox(height: 20),
-            
-              // login
-              CustomTextField(
-                label: 'Email',
-                hint: 'Enter your email',
-                prefix: Icons.email,
-                controller: _emailController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  } else if (!RegExp(r"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\$")
-                      .hasMatch(value)) {
-                    return 'Please enter a valid email';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
+        child: buildLoginForm(context),
+      ),
+    );
+  }
 
-              // password
-              CustomTextField(
-                label: 'Password',
-                hint: 'Enter your password',
-                prefix: Icons.lock,
-                controller: _passwordController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  } else if (value.length < 8) {
-                    return 'Password must be at least 8 characters long';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              LoginButton(
-                  formKey: _formKey,
-                  emailController: _emailController,
-                  passwordController: _passwordController),
-              const SizedBox(height: 20),
-              Center(
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RegisterScreen()),
-                    );
-                  },
-                  child: const Text(
-                    "You don't have an account? Register",
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+  Widget buildLoginForm(BuildContext context) {
+    return Column(
+      children: [
+        Form(
+          key: _formKey,
+          child: ListView.builder(
+            shrinkWrap:
+                true, // Ensure the list view does not take up extra space
+            itemCount: loginFields.length,
+            itemBuilder: (context, index) {
+              return CustomTextField(
+                model: loginFields[index],
+              );
+            },
           ),
         ),
-      ),
+        LoginButton(formKey: _formKey),
+        Center(
+          child: TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RegisterScreen()),
+              );
+             
+            },
+            child: const Text(
+              "You don't have an account? Register",
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }
