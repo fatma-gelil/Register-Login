@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task3/src/feature/home/screens/mass.dart';
 
 class LoginButton extends StatelessWidget {
   const LoginButton({
@@ -34,6 +35,10 @@ class LoginButton extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Login successful!')),
             );
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MassScreen()),
+              );
           } 
             
         },

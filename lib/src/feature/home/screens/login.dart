@@ -37,15 +37,16 @@ class LoginScreen extends StatelessWidget {
       children: [
         Form(
           key: _formKey,
-          child: ListView.builder(
-            shrinkWrap:
-                true, // Ensure the list view does not take up extra space
-            itemCount: loginFields.length,
-            itemBuilder: (context, index) {
-              return CustomTextField(
-                model: loginFields[index],
-              );
-            },
+          child: SizedBox(
+            height:200,
+            child: ListView.builder(
+              itemCount: loginFields.length,
+              itemBuilder: (context, index) {
+                return CustomTextField(
+                  model: loginFields[index],
+                );
+              },
+            ),
           ),
         ),
         LoginButton(formKey: _formKey),
@@ -66,7 +67,8 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
           ),
-        )
+        ),
+       
       ],
     );
   }
